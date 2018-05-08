@@ -1,0 +1,36 @@
+{
+    "name": "lazer/shape",
+    "description": "shape in console",
+    "type": "project",
+    "authors": [
+        {
+            "name": "alex.danilenko",
+            "email": "alex.danilenko1988@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "symfony/console": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "phpro/grumphp": "^0.13.0",
+        "sensiolabs/security-checker": "^4.1",
+        "squizlabs/php_codesniffer": "^2.0",
+        "m6web/Symfony2-coding-standard": "^3.3"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "vendor-dir": "vendor"
+    }
+}

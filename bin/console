@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+$autoload = __DIR__.'/../vendor/autoload.php';
+
+if (!file_exists($autoload)) {
+    if (is_callable('passthru')) {
+        $PHP = defined('PHP_BINARY') ? PHP_BINARY : 'php';
+        $PHP = escapeshellarg($PHP);
+        if ('phpdbg' === PHP_SAPI) {
+            $PHP .= ' -qrr';
+        }
+
+        $oldPwd = getcwd();
+        $COMPOSER = file_exists($COMPOSER = $oldPwd.'/composer.phar') || ($COMPOSER = rtrim('\\' === DIRECTORY_SEPARATOR ? preg_replace('/[\r\n].*/', '', `where.exe composer.phar`) : `which composer.phar`))
+            ? $PHP.' '.escapeshellarg($COMPOSER)
+            : 'composer';
+
+        passthru($COMPOSER.' install');
+    } else {
+        echo "composer dependencies haven't installed, please run `composer install` command";
+        die;
+    }
+}
+
+require_once $autoload;
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+$containerBuilder = new ContainerBuilder();
+$loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__.'/../src'));
+$loader->load('App/Resources/config/services.yml');
+
+$app = new Application();
+$app->add($containerBuilder->get('app.command.shape'));
+$app->run();
