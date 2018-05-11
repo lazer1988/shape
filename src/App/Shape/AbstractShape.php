@@ -74,11 +74,7 @@ abstract class AbstractShape
     protected function output(string $string, bool $breakLine = false): void
     {
         if ($this->output) {
-            if ($breakLine) {
-                $this->output->writeln($string);
-            } else {
-                $this->output->write($string);
-            }
+            $this->output->write($string, $breakLine);
         }
     }
 }
